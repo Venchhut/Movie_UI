@@ -1,3 +1,4 @@
+import { Badge, Text } from "@mantine/core";
 import classes from "./MovieCard.module.css";
 const MovieCard = ({ movie }) => {
   return (
@@ -11,8 +12,14 @@ const MovieCard = ({ movie }) => {
         alt={movie.Title}
       />
       <div>
-        <h3>{movie.Title}</h3>
-        <p>{movie.Year}</p>
+        <Text size="xl">{movie.Title}</Text>
+        <Badge
+          size="xs"
+          variant="gradient"
+          gradient={{ from: "blue", to: "pink", deg: 90 }}
+        >
+          {movie.Year}
+        </Badge>
         <p>{movie.Type}</p>
       </div>
     </div>

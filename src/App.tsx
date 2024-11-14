@@ -1,14 +1,25 @@
-import { AppShell, Button, Grid, SimpleGrid, TextInput } from "@mantine/core";
+import { AppShell, Flex, Grid, SimpleGrid, TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import classes from "./App.module.css";
 import { useEffect, useState } from "react";
 import MovieCard from "./components/MovieCard";
+import Demo from "./components/darkmode/Demo";
+
 const API_URL = "http://www.omdbapi.com?apikey=c032e2d7";
+
+interface Movie {
+  imdbID: string;
+  Title: string;
+  Year: string;
+  Poster: string;
+  Type: string;
+}
+
 const App = () => {
-  const Icon = <IconSearch size={16} stroke={1.5} />;
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const searchMovies = async (title) => {
+
+  const searchMovies = async (title: string) => {
     try {
       const response = await fetch(`${API_URL}&s=${title}`);
       console.log(response);
@@ -18,40 +29,51 @@ const App = () => {
       const data = await response.json();
       setMovies(data.Search || []);
     } catch (error) {
-      console.error("Error fetching movies:", error.message);
+      console.error("Error fetching movies:", (error as Error).message);
     }
   };
 
   useEffect(() => {
     searchMovies("Avengers");
   }, []);
+
   return (
     <AppShell>
-      <div className={classes.searchContainer}>
-        <TextInput
-          className={classes.searchInput}
-          leftSectionPointerEvents="none"
-          rightSection={Icon}
-          placeholder="Search the movie"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <Button onClick={() => searchMovies(searchTerm)}>search</Button>
-      </div>
+      <Flex
+        align="center"
+        justify="center"
+        gap="md"
+        className={classes.searchContainer}
+      >
+        <div>
+          <TextInput
+            className={classes.searchInput}
+            leftSectionPointerEvents="none"
+            rightSection={
+              <button onClick={() => searchMovies(searchTerm)}>
+                <IconSearch size={16} stroke={1.5} />
+              </button>
+            }
+            placeholder="Search the movie"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        <Demo />
+      </Flex>
 
       <Grid grow>
         {movies.length > 0 ? (
-          movies.map((movie) => <MovieCard key={movie.imdbID} movie={movie} />)
+          <SimpleGrid cols={{ base: 2, md: 5 }}>
+            {movies.map((movie) => (
+              <MovieCard key={movie.imdbID} movie={movie} />
+            ))}
+          </SimpleGrid>
         ) : (
-          <h2 className={classes.noMoviesFound}>No movies found</h2>
+          <div className={classes.noMoviesFound}>
+            <p>No movies found</p>
+          </div>
         )}
-      </Grid>
-      <Grid>
-        <Grid.Col span={{ base: 12, md: 6, lg: 3 }}></Grid.Col>
-        <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>2</Grid.Col>
-        <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>3</Grid.Col>
-        <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>4</Grid.Col>
-        <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>4</Grid.Col>
       </Grid>
     </AppShell>
   );
