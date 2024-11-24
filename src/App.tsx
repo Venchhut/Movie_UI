@@ -13,6 +13,7 @@ interface Movie {
   Year: string;
   Poster: string;
   Type: string;
+  movie: string;
 }
 
 const App = () => {
