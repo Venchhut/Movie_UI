@@ -1,6 +1,14 @@
 import { Badge, Text } from "@mantine/core";
 import classes from "./MovieCard.module.css";
-const MovieCard = ({ movie }) => {
+
+interface Movie {
+  Poster: string;
+  Title: string;
+  Year: string;
+  Type: string;
+}
+
+const MovieCard = ({ movie }: { movie: Movie }) => {
   return (
     <div className={classes.movieCard}>
       <img
