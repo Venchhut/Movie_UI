@@ -46,7 +46,7 @@ const App = () => {
         gap="md"
         className={classes.searchContainer}
       >
-        <div>
+        <div className={classes.searchInputContainer}>
           <TextInput
             className={classes.searchInput}
             leftSectionPointerEvents="none"
@@ -65,7 +65,7 @@ const App = () => {
 
       <Grid grow>
         {movies.length > 0 ? (
-          <SimpleGrid cols={{ base: 2, md: 5 }}>
+          <SimpleGrid cols={{ base: 2, sm: 3, md: 4 }}>
             {movies.map((movie) => (
               <MovieCard key={movie.imdbID} movie={movie} />
             ))}
