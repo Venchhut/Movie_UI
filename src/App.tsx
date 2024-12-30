@@ -1,4 +1,4 @@
-import { AppShell, Flex, Grid, SimpleGrid, TextInput } from "@mantine/core";
+import { Container, Grid, Group, SimpleGrid, TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import classes from "./App.module.css";
 import { useEffect, useState } from "react";
@@ -17,8 +17,8 @@ interface Movie {
 }
 
 const App = () => {
-  const [movies, setMovies] = useState<Movie[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [movies, setMovies] = useState<Movie[]>([]);
 
   const searchMovies = async (title: string) => {
     try {
@@ -39,33 +39,37 @@ const App = () => {
   }, []);
 
   return (
-    <AppShell>
-      <Flex
+    <Container size="xl">
+      <Group
         align="center"
         justify="center"
         gap="md"
         className={classes.searchContainer}
       >
-        <div className={classes.searchInputContainer}>
-          <TextInput
-            className={classes.searchInput}
-            leftSectionPointerEvents="none"
-            rightSection={
-              <button onClick={() => searchMovies(searchTerm)}>
-                <IconSearch size={16} stroke={1.5} />
-              </button>
+        <TextInput
+          className={classes.searchInput}
+          leftSectionPointerEvents="none"
+          rightSection={
+            <button onClick={() => searchMovies(searchTerm)}>
+              <IconSearch size={16} stroke={1.5} />
+            </button>
+          }
+          placeholder="Search the movie"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              searchMovies(searchTerm);
             }
-            placeholder="Search the movie"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
+          }}
+        />
+
         <Demo />
-      </Flex>
+      </Group>
 
       <Grid grow>
         {movies.length > 0 ? (
-          <SimpleGrid cols={{ base: 2, sm: 3, md: 4 }}>
+          <SimpleGrid cols={{ base: 2, sm: 2, md: 4 }}>
             {movies.map((movie) => (
               <MovieCard key={movie.imdbID} movie={movie} />
             ))}
@@ -76,7 +80,7 @@ const App = () => {
           </div>
         )}
       </Grid>
-    </AppShell>
+    </Container>
   );
 };
 

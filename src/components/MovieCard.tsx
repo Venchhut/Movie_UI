@@ -1,4 +1,4 @@
-import { Badge, Text } from "@mantine/core";
+import { Badge, Group, Stack, Text } from "@mantine/core";
 import classes from "./MovieCard.module.css";
 
 interface Movie {
@@ -10,7 +10,7 @@ interface Movie {
 
 const MovieCard = ({ movie }: { movie: Movie }) => {
   return (
-    <div className={classes.movieCard}>
+    <Stack className={classes.movieCard}>
       <img
         src={
           movie.Poster !== "N/A"
@@ -21,16 +21,20 @@ const MovieCard = ({ movie }: { movie: Movie }) => {
       />
       <div>
         <Text size="xl">{movie.Title}</Text>
-        <Badge
-          size="xs"
-          variant="gradient"
-          gradient={{ from: "blue", to: "pink", deg: 90 }}
-        >
-          {movie.Year}
-        </Badge>
-        <p>{movie.Type}</p>
+        <Group justify="space-between">
+          <Badge
+            size="md"
+            variant="gradient"
+            gradient={{ from: "blue", to: "pink", deg: 90 }}
+            p={10}
+            radius={5}
+          >
+            {movie.Year}
+          </Badge>
+          <p>{movie.Type}</p>
+        </Group>
       </div>
-    </div>
+    </Stack>
   );
 };
 

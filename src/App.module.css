@@ -5,9 +5,9 @@
 }
 
 .searchInput {
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
   padding: 2rem;
-
   border-radius: 10px;
 }
 
@@ -23,6 +23,10 @@
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
+.card:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
 .noMoviesFound {
   display: flex;
   flex-direction: column;
@@ -32,4 +36,34 @@
   font-size: 18px;
   font-weight: bold;
   color: #666;
+}
+
+@media (max-width: 768px) {
+  .searchInput {
+    padding: 1rem;
+  }
+
+  .card {
+    margin: 5px;
+    padding: 5px;
+  }
+
+  .noMoviesFound {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .searchInput {
+    padding: 0.5rem;
+  }
+
+  .card {
+    margin: 2px;
+    padding: 2px;
+  }
+
+  .noMoviesFound {
+    font-size: 14px;
+  }
 }
